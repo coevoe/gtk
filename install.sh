@@ -9,11 +9,11 @@ mk_backup() {
 			'y')
 				mv ~/.gtkrc-2.0 ~/.gtkrc-2.0.mk_backup-$current_time
 				mv ~/.config/gtk-3.0/settings.ini ~/.config/gtk-3.0/settings.ini_backup_$current_time
+				echo -e "Backing up done\n"
 				break
 				;;
 			'n')
 				echo -e "\033[1;31mThis program will overwrite you gtk configuration!!! \033[0m\n"
-				echo -e "Backing up done\n"
 				break
 				;;
 			*)
@@ -33,10 +33,10 @@ program_help() {
 check_pkgs() {
 	echo -e "Checking for dependencies!\n"
 	if [[ $(pacman -Qqe | grep qogir-gtk-theme) == "qogir-gtk-theme" && $(pacman -Qqe | grep phinger-cursors) == "phinger-cursors" && $(pacman -Qqe | grep papirus-icon-theme) == "papirus-icon-theme" ]]; then
-		echo -e "All of dependencies are installed!\n"
+		echo -e "All of dependencies are installed!"
 	else
 		sudo pacman -S qogir-gtk-theme phinger-cursors papirus-icon-theme
-		echo "All dependencies installed!\n"
+		echo "All dependencies installed!"
 	fi
 	echo -e "Done checking for dependencies!\n"
 }
@@ -47,7 +47,7 @@ theme_install() {
 	cp ./.gtkrc-2.0 ~/.gtkrc-2.0
 	echo -e "Copying GTK 3 theme"
 	cp ./settings.ini $gtk3path/settings.ini
-	echo -e "Done installing gtk theme"
+	echo -e "Done installing gtk theme\n"
 }
 
 main() {
@@ -55,7 +55,7 @@ main() {
 		program_help
 		exit
 	fi
-	echo -e "\033[1;31mThis program will overwrite you gtk configuration, unless you type n when the program will ask you to do a backup \033[0m \n"
+	echo -e "\033[1;31mThis program will overwrite you gtk configuration, unless you type y when the program will ask you to do a backup \033[0m \n"
 	mk_backup
 	check_pkgs
 	theme_install
